@@ -48,27 +48,13 @@ namespace AsyncWebAppDemo.Controllers
             model.OutputMessages.Add("please click the button");
             return View(model);
         }
-        //public async Task<JsonResult> GetBreakfastConcurrent()
-        //{
-        //    AsyncDemoModel model = new AsyncDemoModel();
-        //    await model.CookBreakfastConcurrently();
-        //    return new JsonResult(model);
-
-        //}
-
-        //public async Task<JsonResult> GetBreakfastConcurrentOptimized()
-        //{
-        //    AsyncDemoModel model = new AsyncDemoModel();
-        //    await model.CookBreakfastConcurrentlyOptimized();
-        //    return new JsonResult(model);
-
-        //}
+       
         public class Information
         {
             public string Name { get; set; }
         }
         [HttpPost]
-        public async Task<JsonResult> GetBreakfastConcurrentOptimizedException([FromBody] Information input)
+        public async Task<JsonResult> GetBreakfastConcurrentOptimizedAll([FromBody] Information input)
         {
             AsyncDemoModel model = new AsyncDemoModel();
             switch (input.Name)
@@ -77,10 +63,13 @@ namespace AsyncWebAppDemo.Controllers
                     await model.CookBreakfastConcurrently();
                     break;
                 case "GetBreakfastConcurrentOptimized":
-                    await model.CookBreakfastConcurrentlyOptimized();
+                    await model.CookBreakfastConcurrentOptimized();
                     break;
                 case "GetBreakfastConcurrentOptimizedException":
-                    await model.CookBreakfastConcurrentlyOptimizedException();
+                    await model.CookBreakfastConcurrentOptimizedException();
+                    break;
+                case "GetBreakfastConcurrentOptimizedAll":
+                    await model.CookBreakfastConcurrentlyOptimizedAll();
                     break;
             }
             

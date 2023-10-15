@@ -98,7 +98,7 @@
             OutputMessages.Add($"time taken / total milis: {(dateTimeEnd.Subtract(dateTimeInit)).TotalMilliseconds.ToString()} / total seconds: {(dateTimeEnd.Subtract(dateTimeInit)).TotalSeconds.ToString()}");
         }
 
-        public async Task CookBreakfastConcurrentlyOptimized()
+        public async Task CookBreakfastConcurrentOptimized()
         {
             DateTime dateTimeInit = DateTime.Now;
             OutputMessages.Add($"start time: {dateTimeInit.ToLongTimeString()}");
@@ -127,7 +127,47 @@
             OutputMessages.Add($"time taken / total milis: {(dateTimeEnd.Subtract(dateTimeInit)).TotalMilliseconds.ToString()} / total seconds: {(dateTimeEnd.Subtract(dateTimeInit)).TotalSeconds.ToString()}");
         }
 
-        public async Task CookBreakfastConcurrentlyOptimizedException()
+        public async Task CookBreakfastConcurrentlyOptimizedAll()
+        {
+            DateTime dateTimeInit = DateTime.Now;
+            OutputMessages.Add($"start time: {dateTimeInit.ToLongTimeString()}");
+
+            Coffee cup = await PourCoffeeAsync();
+            OutputMessages.Add("coffee is ready");
+
+            Task<Egg> eggsTask = FryEggsAsync(2);
+            Task<Bacon> baconTask = FryBaconAsync(3);
+            Task<Toast> toastTask = MakeToastWithButterAndJamAsync(2);
+
+            var breakfastTasks = new List<Task> { eggsTask, baconTask, toastTask };
+            while (breakfastTasks.Count > 0)
+            {
+                Task finishedTask = await Task.WhenAny(breakfastTasks);
+                if (finishedTask == eggsTask)
+                {
+                    OutputMessages.Add("Eggs are ready");
+                }
+                else if (finishedTask == baconTask)
+                {
+                    OutputMessages.Add("Bacon is ready");
+                }
+                else if (finishedTask == toastTask)
+                {
+                    OutputMessages.Add("Toast is ready");
+                }
+                await finishedTask;
+                breakfastTasks.Remove(finishedTask);
+            }
+
+            Juice oj = await PourOJAsync();
+            Console.WriteLine("oj is ready");
+            OutputMessages.Add("Breakfast is ready!");
+            DateTime dateTimeEnd = DateTime.Now;
+            OutputMessages.Add($"end time: {dateTimeEnd.ToLongTimeString()}");
+            OutputMessages.Add($"time taken / total milis: {(dateTimeEnd.Subtract(dateTimeInit)).TotalMilliseconds.ToString()} / total seconds: {(dateTimeEnd.Subtract(dateTimeInit)).TotalSeconds.ToString()}");
+        }
+
+        public async Task CookBreakfastConcurrentOptimizedException()
         {
             DateTime dateTimeInit = DateTime.Now;
             OutputMessages.Add($"start time: {dateTimeInit.ToLongTimeString()}");
@@ -176,8 +216,8 @@
         private async Task<Toast> MakeToastWithButterAndJamAsyncException(int number)
         {
             var toast = await ToastBreadAsyncException(number);
-            ApplyButter(toast);
-            ApplyJam(toast);
+            await ApplyButterAsync(toast);
+            await ApplyJamAsync(toast);
 
             return toast;
         }
