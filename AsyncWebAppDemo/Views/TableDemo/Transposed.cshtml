@@ -1,0 +1,44 @@
+﻿@model TableDemoModel
+@{
+    ViewData["Title"] = "Table Demo";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Industry sectors</p>
+<style>
+    .tabledemo tr th, td{
+        border: 1px solid red;
+    }
+</style>
+
+<table class="tabledemo">
+    <thead>
+        <tr>
+            <th>Id</th>
+            @foreach (IndustrySector sector in Model.IndustrySectorList)
+            {    
+                <th>@sector.Id</th>                    
+            }                                
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Title</th>
+            @foreach(IndustrySector sector in Model.IndustrySectorList)
+            {
+            
+                <td>@sector.Title</td>         
+    
+            }
+        </tr>
+        <tr>
+            <th>Description</th>
+            @foreach (IndustrySector sector in Model.IndustrySectorList)
+            {
+        
+                <td>@sector.Description</td>
+    
+            }
+        </tr>
+    </tbody>
+</table>

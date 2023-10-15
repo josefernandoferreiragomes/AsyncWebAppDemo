@@ -1,0 +1,114 @@
+﻿@model AsyncDemoModel
+@{
+    ViewData["Title"] = "Concurrent Demo";
+}
+
+<button id="button" type="button">Click</button>
+<button id="buttonOptimized" type="button">Click for optimized</button>
+<button id="buttonOptimizedException" type="button">Click for optimized with exception</button>
+
+<div id="overlay">
+  <div class="cv-spinner">
+    <span class="spinner"></span>
+  </div>
+</div>
+
+<div id="tablediv"></div>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@section Scripts{
+    <script>
+
+        var tableHtml="";        
+
+        function fillTable(value){
+            var result ="";                    
+            result+="<tr><td>"+value+"</td><tr>";
+            tableHtml += result;
+        }
+
+        jQuery(function ($) {
+            $(document).ajaxSend(function () {
+                $("#overlay").fadeIn(300);
+            });
+
+            $('#button').click(function () {
+                tableHtml = "";
+                tableHtml += "<table><thead><tr><th>Output Message</th></tr></thead><tbody>";
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetBreakfastConcurrent", "AsyncDemo")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        
+                        console.log(data);
+                        data.outputMessages.forEach(fillTable);
+                        tableHtml+="</tbody></table>";
+                        $("#tablediv").html(tableHtml);
+                    }
+                }).done(function () {
+                    setTimeout(function () {
+                        $("#overlay").fadeOut(100);
+                    }, 500);
+                });
+            });
+
+            $('#buttonOptimized').click(function () {
+                tableHtml = "";
+                tableHtml += "<table><thead><tr><th>Output Message</th></tr></thead><tbody>";
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetBreakfastConcurrentOptimized", "AsyncDemo")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+
+                        console.log(data);
+                        data.outputMessages.forEach(fillTable);
+                        tableHtml += "</tbody></table>";
+                        $("#tablediv").html(tableHtml);
+                    }
+                }).done(function () {
+                    setTimeout(function () {
+                        $("#overlay").fadeOut(300);
+                    }, 5000);
+                });
+            });
+
+            $('#buttonOptimizedException').click(function () {
+                tableHtml = "";
+                tableHtml += "<table><thead><tr><th>Output Message</th></tr></thead><tbody>";
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetBreakfastConcurrentOptimizedException", "AsyncDemo")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+
+                        console.log(data);
+                        data.outputMessages.forEach(fillTable);
+                        tableHtml += "</tbody></table>";
+                        $("#tablediv").html(tableHtml);
+                    },
+                    error: function (error) {
+
+                        console.log(error);
+
+                        tableHtml = "error.responseText: " + error.responseText;
+                        $("#tablediv").html(tableHtml);
+                        $("#overlay").fadeOut(100);
+                    }
+                }).done(function () {
+                    setTimeout(function () {
+                        $("#overlay").fadeOut(100);
+                    }, 5000);
+                });
+            });
+        });
+    </script>
+}
