@@ -48,26 +48,43 @@ namespace AsyncWebAppDemo.Controllers
             model.OutputMessages.Add("please click the button");
             return View(model);
         }
-        public async Task<JsonResult> GetBreakfastConcurrent()
-        {
-            AsyncDemoModel model = new AsyncDemoModel();
-            await model.CookBreakfastConcurrently();
-            return new JsonResult(model);
+        //public async Task<JsonResult> GetBreakfastConcurrent()
+        //{
+        //    AsyncDemoModel model = new AsyncDemoModel();
+        //    await model.CookBreakfastConcurrently();
+        //    return new JsonResult(model);
 
+        //}
+
+        //public async Task<JsonResult> GetBreakfastConcurrentOptimized()
+        //{
+        //    AsyncDemoModel model = new AsyncDemoModel();
+        //    await model.CookBreakfastConcurrentlyOptimized();
+        //    return new JsonResult(model);
+
+        //}
+        public class Information
+        {
+            public string Name { get; set; }
         }
-        
-        public async Task<JsonResult> GetBreakfastConcurrentOptimized()
+        [HttpPost]
+        public async Task<JsonResult> GetBreakfastConcurrentOptimizedException([FromBody] Information input)
         {
             AsyncDemoModel model = new AsyncDemoModel();
-            await model.CookBreakfastConcurrentlyOptimized();
-            return new JsonResult(model);
-
-        }
-
-        public async Task<JsonResult> GetBreakfastConcurrentOptimizedException()
-        {
-            AsyncDemoModel model = new AsyncDemoModel();
-            await model.CookBreakfastConcurrentlyOptimizedException();
+            switch (input.Name)
+            {
+                case "GetBreakfastConcurrent":
+                    await model.CookBreakfastConcurrently();
+                    break;
+                case "GetBreakfastConcurrentOptimized":
+                    await model.CookBreakfastConcurrentlyOptimized();
+                    break;
+                case "GetBreakfastConcurrentOptimizedException":
+                    await model.CookBreakfastConcurrentlyOptimizedException();
+                    break;
+            }
+            
+            
             return new JsonResult(model);
 
         }
