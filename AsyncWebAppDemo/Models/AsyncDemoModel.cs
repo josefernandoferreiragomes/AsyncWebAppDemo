@@ -140,6 +140,8 @@
             Task<Toast> toastTask = MakeToastWithButterAndJamAsync(2);
 
             var breakfastTasks = new List<Task> { eggsTask, baconTask, toastTask };
+            
+            //will remove tasks from the list until all are campleted
             while (breakfastTasks.Count > 0)
             {
                 Task finishedTask = await Task.WhenAny(breakfastTasks);
@@ -205,7 +207,7 @@
                 Console.WriteLine("Putting a slice of bread in the toaster");
             }
             Console.WriteLine("Start toasting...");
-            await Task.Delay(2000);
+            await Task.Delay(3002);
             Console.WriteLine("Fire! Toast is ruined!");
             throw new InvalidOperationException("The toaster is on fire");
             await Task.Delay(1000);
@@ -249,7 +251,7 @@
                 OutputMessages.Add("Putting a slice of bread in the toaster");
             }
             OutputMessages.Add("Start toasting...");
-            await Task.Delay(3000);
+            await Task.Delay(3002);
             OutputMessages.Add("Remove toast from toaster");
 
             return new Toast();
@@ -258,13 +260,13 @@
         {
             OutputMessages.Add($"putting {slices} slices of bacon in the pan");
             OutputMessages.Add("cooking first side of bacon...");
-            await Task.Delay(3000);
+            await Task.Delay(4003);
             for (int slice = 0; slice < slices; slice++)
             {
                 OutputMessages.Add("flipping a slice of bacon");
             }
             OutputMessages.Add("cooking the second side of bacon...");
-            await Task.Delay(3000);
+            await Task.Delay(4003);
             OutputMessages.Add("Put bacon on plate");
 
             return new Bacon();
@@ -273,10 +275,10 @@
         private async Task<Egg> FryEggsAsync(int howMany)
         {
             OutputMessages.Add("Warming the egg pan...");
-            await Task.Delay(3000);
+            await Task.Delay(3004);
             OutputMessages.Add($"cracking {howMany} eggs");
             OutputMessages.Add("cooking the eggs ...");
-            await Task.Delay(3000);
+            await Task.Delay(3005);
             OutputMessages.Add("Put eggs on plate");
 
             return new Egg();
@@ -309,7 +311,7 @@
                 OutputMessages.Add("Putting a slice of bread in the toaster");
             }
             OutputMessages.Add("Start toasting...");
-            Task.Delay(3000).Wait();
+            Task.Delay(3002).Wait();
             OutputMessages.Add("Remove toast from toaster");
 
             return new Toast();
@@ -319,13 +321,13 @@
         {
             OutputMessages.Add($"putting {slices} slices of bacon in the pan");
             OutputMessages.Add("cooking first side of bacon...");
-            Task.Delay(3000).Wait();
+            Task.Delay(4003).Wait();
             for (int slice = 0; slice < slices; slice++)
             {
                 OutputMessages.Add("flipping a slice of bacon");
             }
             OutputMessages.Add("cooking the second side of bacon...");
-            Task.Delay(3000).Wait();
+            Task.Delay(4003).Wait();
             OutputMessages.Add("Put bacon on plate");
 
             return new Bacon();
@@ -334,10 +336,10 @@
         private Egg FryEggs(int howMany)
         {
             OutputMessages.Add("Warming the egg pan...");
-            Task.Delay(3000).Wait();
+            Task.Delay(3004).Wait();
             OutputMessages.Add($"cracking {howMany} eggs");
             OutputMessages.Add("cooking the eggs ...");
-            Task.Delay(3000).Wait();
+            Task.Delay(3005).Wait();
             OutputMessages.Add("Put eggs on plate");
 
             return new Egg();

@@ -1,0 +1,59 @@
+﻿@model AsyncApiCallDemoModel
+@{
+    ViewData["Title"] = "Async Demo, but not concurrent";
+}
+
+<button id="button" type="button">Click for async but not concurrent</button>
+
+<div id="overlay">
+  <div class="cv-spinner">
+    <span class="spinner"></span>
+  </div>
+</div>
+
+<div id="tablediv"></div>
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@section Scripts{
+    <script>
+
+        var tableHtml="";
+        tableHtml+="<table><thead><tr><th>Output Message</th></tr></thead><tbody>";
+
+        function fillTable(value){
+            var result ="";                    
+            result+="<tr><td>"+value+"</td><tr>";
+            tableHtml += result;
+        }
+
+        jQuery(function ($) {
+            $(document).ajaxSend(function () {
+                $("#overlay").fadeIn(300);
+            });
+
+            $('#button').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: '@Url.Action("GetApiCallIntermediate", "AsyncApiCallDemo")',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        
+                        console.log(data);
+                        data.outputMessages.forEach(fillTable);
+                        tableHtml+="</tbody></table>";
+                        $("#tablediv").html(tableHtml);
+                    }
+                }).done(function () {
+                    setTimeout(function () {
+                        $("#overlay").fadeOut(300);
+                    }, 5000);
+                });
+            });
+        });
+    </script>
+}
