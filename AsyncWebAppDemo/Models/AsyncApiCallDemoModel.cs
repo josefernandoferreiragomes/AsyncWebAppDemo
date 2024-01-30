@@ -21,7 +21,7 @@ namespace AsyncWebAppDemo.Models
 
         public void GetApiCallSync()
         {
-            DateTime dateTimeInit = DateTime.Now;
+            System.DateTime dateTimeInit = System.DateTime.Now;
             OutputMessages.Add($"start time: {dateTimeInit.ToLongTimeString()}");
            
             //full sync
@@ -29,47 +29,48 @@ namespace AsyncWebAppDemo.Models
             {
                 try
                 {
-                    AsyncWebAppDemo.ExternalApi.ApiDemo client = new ExternalApi.ApiDemo(BaseUrl, httpclient);
+                    AsyncWebAppDemo.ExternalApi.ExternalApiDemo client = new ExternalApi.ExternalApiDemo(BaseUrl, httpclient);
+                    Task<ICollection<WeatherForecast>> output;
                     //1st call
                     OutputMessages.Add("1st call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("1st call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"1st call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //2nd call
                     OutputMessages.Add("2nd call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("2nd call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"2nd call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //3rd call
                     OutputMessages.Add("3rd call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("3rd call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"3rd call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //4th call
                     OutputMessages.Add("4th call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("4th call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"4th call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //5th call
                     OutputMessages.Add("5th call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("5th call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"5th call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //6th call
                     OutputMessages.Add("6th call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("6th call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"6th call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //7th call
                     OutputMessages.Add("7th call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("7th call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"7th call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //8th call
                     OutputMessages.Add("8th call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("8th call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"8th call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //9th call
                     OutputMessages.Add("9th call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("9th call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"9th call returned: {output.Result.FirstOrDefault().TemperatureC}");
                     //10th call
                     OutputMessages.Add("10th call sent");
-                    client.GetWeatherForecastAsync();
-                    OutputMessages.Add("10th call returned");
+                    output = client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"10th call returned: {output.Result.FirstOrDefault().TemperatureC}");
                 }
                 catch (Exception exp)
                 {
@@ -78,13 +79,13 @@ namespace AsyncWebAppDemo.Models
             }
 
 
-            DateTime dateTimeEnd = DateTime.Now;
+            System.DateTime dateTimeEnd = System.DateTime.Now;
             OutputMessages.Add($"end time: {dateTimeEnd.ToLongTimeString()}");
             OutputMessages.Add($"time taken / total milis: {(dateTimeEnd.Subtract(dateTimeInit)).TotalMilliseconds.ToString()} / total seconds: {(dateTimeEnd.Subtract(dateTimeInit)).TotalSeconds.ToString()}");
         }
         public async Task GetApiCallAsync()
         {
-            DateTime dateTimeInit = DateTime.Now;
+            System.DateTime dateTimeInit = System.DateTime.Now;
             OutputMessages.Add($"start time: {dateTimeInit.ToLongTimeString()}");
             
             //async
@@ -92,67 +93,69 @@ namespace AsyncWebAppDemo.Models
             {
                 try
                 {
-                    AsyncWebAppDemo.ExternalApi.ApiDemo client = new ExternalApi.ApiDemo(BaseUrl, httpclient);
+                    AsyncWebAppDemo.ExternalApi.ExternalApiDemo client = new ExternalApi.ExternalApiDemo(BaseUrl, httpclient);
+                    ICollection<WeatherForecast> output;
                     //1st call
                     OutputMessages.Add("1st call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("1st call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"1st call returned: {output.FirstOrDefault().TemperatureC}");
                     //2nd call
                     OutputMessages.Add("2nd call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("2nd call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"2nd call returned: {output.FirstOrDefault().TemperatureC}");
                     //3rd call
                     OutputMessages.Add("3rd call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("3rd call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"3rd call returned: {output.FirstOrDefault().TemperatureC}");
                     //4th call
                     OutputMessages.Add("4th call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("4th call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"4th call returned: {output.FirstOrDefault().TemperatureC}");
                     //5th call
                     OutputMessages.Add("5th call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("5th call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"5th call returned: {output.FirstOrDefault().TemperatureC}");
                     //6th call
                     OutputMessages.Add("6th call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("6th call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"6th call returned: {output.FirstOrDefault().TemperatureC}");
                     //7th call
                     OutputMessages.Add("7th call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("7th call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"7th call returned: {output.FirstOrDefault().TemperatureC}");
                     //8th call
                     OutputMessages.Add("8th call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("8th call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"8th call returned: {output.FirstOrDefault().TemperatureC}");
                     //9th call
                     OutputMessages.Add("9th call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("9th call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"9th call returned: {output.FirstOrDefault().TemperatureC}");
                     //10th call
                     OutputMessages.Add("10th call sent");
-                    await client.GetWeatherForecastAsync();
-                    OutputMessages.Add("10th call returned");
+                    output = await client.GetWeatherForecastAsync();
+                    OutputMessages.Add($"10th call returned: {output.FirstOrDefault().TemperatureC}");
                 }
                 catch(Exception exp)
                 {
                     OutputMessages.Add(exp.Message);                    
                 }
             }
-            DateTime dateTimeEnd = DateTime.Now;
+            System.DateTime dateTimeEnd = System.DateTime.Now;
             OutputMessages.Add($"end time: {dateTimeEnd.ToLongTimeString()}");
             OutputMessages.Add($"time taken / total milis: {(dateTimeEnd.Subtract(dateTimeInit)).TotalMilliseconds.ToString()} / total seconds: {(dateTimeEnd.Subtract(dateTimeInit)).TotalSeconds.ToString()}");
         }
 
         public async Task GetApiCallConcurrent()
         {
-            DateTime dateTimeInit = DateTime.Now;
+            System.DateTime dateTimeInit = System.DateTime.Now;
             OutputMessages.Add($"start time: {dateTimeInit.ToLongTimeString()}");
 
             //concurrent
             using (var httpclient = new HttpClient())
             {
-                AsyncWebAppDemo.ExternalApi.ApiDemo client = new ExternalApi.ApiDemo(BaseUrl, httpclient);
+                AsyncWebAppDemo.ExternalApi.ExternalApiDemo client = new ExternalApi.ExternalApiDemo(BaseUrl, httpclient);
+                ICollection<WeatherForecast> output;
                 //1st call
                 OutputMessages.Add("1st call sent");
                 Task<ICollection<WeatherForecast>> task1 = client.GetWeatherForecastAsync();
@@ -184,28 +187,28 @@ namespace AsyncWebAppDemo.Models
                 OutputMessages.Add("10th call sent");
                 Task<ICollection<WeatherForecast>> task10 = client.GetWeatherForecastAsync();
 
-                await task1;
-                OutputMessages.Add("1st call returned");
-                await task2;
-                OutputMessages.Add("2nd call returned");
-                await task3;
-                OutputMessages.Add("3rd call returned");
-                await task4;
-                OutputMessages.Add("4th call returned");
-                await task5;
-                OutputMessages.Add("5th call returned");
-                await task6;
-                OutputMessages.Add("6th call returned");
-                await task7;
-                OutputMessages.Add("7th call returned");
-                await task8;
-                OutputMessages.Add("8th call returned");
-                await task9;
-                OutputMessages.Add("9th call returned");
-                await task10;
-                OutputMessages.Add("10th call returned");
+                output = await task1;                
+                OutputMessages.Add($"1st call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task2;
+                OutputMessages.Add($"2nd call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task3;
+                OutputMessages.Add($"3rd call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task4;
+                OutputMessages.Add($"4th call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task5;
+                OutputMessages.Add($"5th call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task6;
+                OutputMessages.Add($"6th call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task7;
+                OutputMessages.Add($"7th call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task8;
+                OutputMessages.Add($"8th call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task9;
+                OutputMessages.Add($"9th call returned: {output.FirstOrDefault().TemperatureC}");
+                output = await task10;
+                OutputMessages.Add($"10th call returned: {output.FirstOrDefault().TemperatureC}");
             }
-            DateTime dateTimeEnd = DateTime.Now;
+            System.DateTime dateTimeEnd = System.DateTime.Now;
             OutputMessages.Add($"end time: {dateTimeEnd.ToLongTimeString()}");
             OutputMessages.Add($"time taken / total milis: {(dateTimeEnd.Subtract(dateTimeInit)).TotalMilliseconds.ToString()} / total seconds: {(dateTimeEnd.Subtract(dateTimeInit)).TotalSeconds.ToString()}");
         }
@@ -213,13 +216,14 @@ namespace AsyncWebAppDemo.Models
 
         public async Task CookBreakfastConcurrentlyOptimizedAll()
         {
-            DateTime dateTimeInit = DateTime.Now;
+            System.DateTime dateTimeInit = System.DateTime.Now;
             OutputMessages.Add($"start time: {dateTimeInit.ToLongTimeString()}");
 
             //concurrent optimized
             using (var httpclient = new HttpClient())
             {
-                AsyncWebAppDemo.ExternalApi.ApiDemo client = new ExternalApi.ApiDemo(BaseUrl, httpclient);
+                AsyncWebAppDemo.ExternalApi.ExternalApiDemo client = new ExternalApi.ExternalApiDemo(BaseUrl, httpclient);
+                ICollection<WeatherForecast> output;
                 //1st call
                 OutputMessages.Add("1st call sent");
                 Task<ICollection<WeatherForecast>> task1 = client.GetWeatherForecastAsync();
@@ -251,18 +255,19 @@ namespace AsyncWebAppDemo.Models
                 OutputMessages.Add("10th call sent");
                 Task<ICollection<WeatherForecast>> task10 = client.GetWeatherForecastAsync();
 
-                var serviceCallTasks = new List<Task>() {task1, task2, task3, task4, task5, task6, task7, task8, task9, task10};
+                var serviceCallTasks = new List<Task<ICollection<WeatherForecast>>>() {task1, task2, task3, task4, task5, task6, task7, task8, task9, task10};
 
                 while (serviceCallTasks.Count > 0)
                 {
-                    Task finishedTask = await Task.WhenAny(serviceCallTasks);
-                    OutputMessages.Add("call returned");
+                    Task<ICollection<WeatherForecast>> finishedTask = await Task.WhenAny(serviceCallTasks);
+                    output = finishedTask.Result;
+                    OutputMessages.Add($"call returned: {output.FirstOrDefault().TemperatureC}");
                     await finishedTask;
                     serviceCallTasks.Remove(finishedTask);
                 }
                
             }
-            DateTime dateTimeEnd = DateTime.Now;
+            System.DateTime dateTimeEnd = System.DateTime.Now;
             OutputMessages.Add($"end time: {dateTimeEnd.ToLongTimeString()}");
             OutputMessages.Add($"time taken / total milis: {(dateTimeEnd.Subtract(dateTimeInit)).TotalMilliseconds.ToString()} / total seconds: {(dateTimeEnd.Subtract(dateTimeInit)).TotalSeconds.ToString()}");
         }

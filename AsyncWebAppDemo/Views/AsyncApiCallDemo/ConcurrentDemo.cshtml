@@ -62,7 +62,7 @@
             $.ajax({
                 data: stringData,
                 type: "POST",
-                url: '@Url.Action("GetApiCallConcurrentOptimizedAll", "AsyncDemo")',
+                url: '@Url.Action("GetApiCallConcurrentOptimizedAll", "AsyncApiCallDemo")',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -81,10 +81,10 @@
                     $("#overlay").fadeOut(100);
                 }
             }).done(function () {
-                        setTimeout(
-                                    function () {
-                                        $("#overlay").fadeOut(100);
-                                    }, 5000);
+                setTimeout(
+                    function () {
+                        $("#overlay").fadeOut(100);
+                    }, 5000);
             });
                 
         }    
