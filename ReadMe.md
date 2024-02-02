@@ -5,7 +5,7 @@ Table vs Transposed table
 
 ## Sync Async Concurrent Demo
 
-### The purpose of this application section is to demonstrate the difference between Sync, Async, and Concurrent server calls
+### The purpose of this application section is to demonstrate the difference between Sync, Async, and Concurrent server calls with thread synchronization
 It includes:
 	ajax calls to a controller, whose model simulates server calls, using Task.Delay().Wait();
 	ajax calls to another controller, whose model calls an API, which in turn simulates third-party server calls, using Task.Delay().Wait();
