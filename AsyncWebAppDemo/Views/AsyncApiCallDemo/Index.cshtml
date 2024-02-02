@@ -1,59 +1,96 @@
 ﻿@model AsyncApiCallDemoModel
 @{
-    ViewData["Title"] = "Sync Api Call Demo";
+    ViewData["Title"] = "Concurrent Api Call Demo";
 }
-
-<button id="button" type="button">Click for sync</button>
-
+<div class="text-center">
+    <h7 class="display-7">Concurrent Api Call Demo</h7>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
 <div id="overlay">
   <div class="cv-spinner">
     <span class="spinner"></span>
   </div>
 </div>
-
-<div id="tablediv"></div>
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div id="errorMessageDiv"></div>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+            <button id="buttonSync" type="button" onclick='sendServerRequest("GetApiCallSync")'>Click for sync</button>
+            <div id="GetApiCallSync"></div>
+        </div>
+        <div class="col-sm">
+            <button id="buttonAsync" type="button" onclick='sendServerRequest("GetApiCallAsync")'>Click for async</button>
+            <div id="GetApiCallAsync"></div>
+        </div>
+        <div class="col-sm">
+            <button id="buttonAsyncConcurrent" type="button" onclick='sendServerRequest("GetApiCallConcurrent")'>Click for async concurrent</button>
+            <div id="GetApiCallConcurrent"></div>
+        </div>
+        <div class="col-sm">
+            <button id="buttonAsyncConcurrentOptimized" type="button" onclick='sendServerRequest("GetApiCallConcurrentOptimized")'>Click for async concurrent optimized</button>
+            <div id="GetApiCallConcurrentOptimizedAll"></div>
+        </div>
+    </div>
 </div>
+
+
+
 
 @section Scripts{
     <script>
 
-        var tableHtml="";
-        tableHtml+="<table><thead><tr><th>Output Message</th></tr></thead><tbody>";
-
+        var tableHtml="";        
+        var MethodName="";
         function fillTable(value){
             var result ="";                    
             result+="<tr><td>"+value+"</td><tr>";
             tableHtml += result;
         }
 
-        jQuery(function ($) {
-            $(document).ajaxSend(function () {
-                $("#overlay").fadeIn(300);
-            });
+        function fnFillTable(method, tableHtml) {
+                $("#" + method).html(tableHtml);
+            }
 
-            $('#button').click(function () {
-                $.ajax({
-                    type: 'GET',
-                    url: '@Url.Action("GetApiCall", "AsyncApiCallDemo")',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (data) {
-                        
-                        console.log(data);
-                        data.outputMessages.forEach(fillTable);
-                        tableHtml+="</tbody></table>";
-                        $("#tablediv").html(tableHtml);
-                    }
-                }).done(function () {
-                    setTimeout(function () {
-                        $("#overlay").fadeOut(300);
+        function sendServerRequest(method) {
+            MethodName = method;
+            var information = {};
+            information.name = method;
+            var stringData = JSON.stringify(information);
+            tableHtml = "";
+            tableHtml += "<table><thead><tr><th>Output Message</th></tr></thead><tbody>";
+            $.ajax({
+                data: stringData,
+                type: "POST",
+                url: '@Url.Action("GetApiCallConcurrentOptimizedAll", "AsyncApiCallDemo")',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+
+                    console.log(data);
+                    data.outputMessages.forEach(fillTable);
+                    tableHtml += "</tbody></table>";
+                    fnFillTable(MethodName, tableHtml);
+                },
+                error: function (error) {
+
+                    console.log(error);
+
+                    tableHtml = "error.responseText: " + error.responseText;
+                    $("#errorMessageDiv").html(tableHtml);
+                    $("#overlay").fadeOut(100);
+                }
+            }).done(function () {
+                setTimeout(
+                    function () {
+                        $("#overlay").fadeOut(100);
                     }, 5000);
-                });
             });
-        });
+                
+        }    
+
+        jQuery(function ($) {
+            $(document).ajaxSend(function () {$("#overlay").fadeIn(300);});
+        });                       
+                   
     </script>
 }

@@ -214,7 +214,7 @@ namespace AsyncWebAppDemo.Models
         }
       
 
-        public async Task CookBreakfastConcurrentlyOptimizedAll()
+        public async Task GetApiCallConcurrentOptimized()
         {
             System.DateTime dateTimeInit = System.DateTime.Now;
             OutputMessages.Add($"start time: {dateTimeInit.ToLongTimeString()}");

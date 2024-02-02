@@ -13,70 +13,32 @@ namespace AsyncWebAppDemo.Controllers
             _logger = logger;
         }
 
-        /// <summary>
-        /// to be used
-        /// </summary>
-        /// <returns></returns>
+        
         public IActionResult Index()
         {
             AsyncApiCallDemoModel model = new AsyncApiCallDemoModel();
-            model.OutputMessages.Add("please click the button");
+            model.OutputMessages.Add("please select service call test");
             return View(model);
         }
 
-        /// <summary>
-        /// to be used
-        /// </summary>
-        /// <returns></returns>
-        public JsonResult GetApiCall()
-        {
-            AsyncApiCallDemoModel model = new AsyncApiCallDemoModel();
-            model.GetApiCallSync();
-            return new JsonResult(model);
-
-        }
-
-        public IActionResult IntermediateDemo()
-        {
-            AsyncApiCallDemoModel model = new AsyncApiCallDemoModel();
-            model.OutputMessages.Add("please click the button");
-            return View(model);
-        }
-        public async Task<JsonResult> GetApiCallIntermediate()
-        {
-            AsyncApiCallDemoModel model = new AsyncApiCallDemoModel();
-            await model.GetApiCallAsync();
-            return new JsonResult(model);
-
-        }
-        
-        /// <summary>
-        /// to be used
-        /// </summary>
-        /// <returns></returns>
-        public IActionResult ConcurrentDemo()
-        {
-            AsyncApiCallDemoModel model = new AsyncApiCallDemoModel();
-            model.OutputMessages.Add("please click the button");
-            return View(model);
-        }
        
-        public class Information
-        {
-            public string Name { get; set; }
-        }
         [HttpPost]
         public async Task<JsonResult> GetApiCallConcurrentOptimizedAll([FromBody] Information input)
         {
             AsyncApiCallDemoModel model = new AsyncApiCallDemoModel();
             switch (input.Name)
             {
+                case "GetApiCallSync":
+                    model.GetApiCallSync();
+                    break;
+                case "GetApiCallAsync":
+                    await model.GetApiCallAsync();
+                    break;
                 case "GetApiCallConcurrent":
                     await model.GetApiCallConcurrent();
-                    break;
-         
-                case "GetApiCallConcurrentOptimizedAll":
-                    await model.CookBreakfastConcurrentlyOptimizedAll();
+                    break;         
+                case "GetApiCallConcurrentOptimized":
+                    await model.GetApiCallConcurrentOptimized();
                     break;
             }
             
