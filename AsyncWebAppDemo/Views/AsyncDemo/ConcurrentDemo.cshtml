@@ -17,6 +17,14 @@
 <div class="container">
     <div class="row">
         <div class="col-sm">
+            <button id="buttonSync" type="button" onclick='sendServerRequest("GetBreakfastSync")'>Click for sync</button>
+            <div id="GetBreakfastSync"></div>
+        </div>
+        <div class="col-sm">
+            <button id="buttonAsyncSimple" type="button" onclick='sendServerRequest("GetBreakfastAsync")'>Click for async but not concurrent</button>
+            <div id="GetBreakfastSync"></div>
+        </div>
+        <div class="col-sm">
             <button id="buttonAsync" type="button" onclick='sendServerRequest("GetBreakfastConcurrent")'>Click for async</button>
             <div id="GetBreakfastConcurrent"></div>
         </div>
