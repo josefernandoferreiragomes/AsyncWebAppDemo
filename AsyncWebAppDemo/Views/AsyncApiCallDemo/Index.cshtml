@@ -3,7 +3,7 @@
     ViewData["Title"] = "Concurrent Api Call Demo";
 }
 <div class="text-center">
-    <h7 class="display-7">Concurrent Api Call Demo</h7>
+    <h7 class="display-7">Sync, Async, Concurrent, controller and API call with mock</h7>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 <div id="overlay">
@@ -15,19 +15,19 @@
 <div class="container">
     <div class="row">
         <div class="col-sm">
-            <button id="buttonSync" type="button" onclick='sendServerRequest("GetApiCallSync")'>Click for sync</button>
+            <button id="buttonSync" type="button" onclick='sendServerRequest("GetApiCallSync")'>Sync</button>
             <div id="GetApiCallSync"></div>
         </div>
         <div class="col-sm">
-            <button id="buttonAsync" type="button" onclick='sendServerRequest("GetApiCallAsync")'>Click for async</button>
+            <button id="buttonAsync" type="button" onclick='sendServerRequest("GetApiCallAsync")'>Async</button>
             <div id="GetApiCallAsync"></div>
         </div>
         <div class="col-sm">
-            <button id="buttonAsyncConcurrent" type="button" onclick='sendServerRequest("GetApiCallConcurrent")'>Click for async concurrent</button>
+            <button id="buttonAsyncConcurrent" type="button" onclick='sendServerRequest("GetApiCallConcurrent")'>Async concurrent</button>
             <div id="GetApiCallConcurrent"></div>
         </div>
         <div class="col-sm">
-            <button id="buttonAsyncConcurrentOptimized" type="button" onclick='sendServerRequest("GetApiCallConcurrentOptimized")'>Click for async concurrent optimized</button>
+            <button id="buttonAsyncConcurrentOptimized" type="button" onclick='sendServerRequest("GetApiCallConcurrentOptimized")'>Async concurrent optimized</button>
             <div id="GetApiCallConcurrentOptimizedAll"></div>
         </div>
     </div>

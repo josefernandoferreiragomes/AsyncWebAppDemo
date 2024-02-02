@@ -21,6 +21,7 @@ namespace AsyncWebApiDemo.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            //simulate third party api call
             Task.Delay(2995).Wait();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

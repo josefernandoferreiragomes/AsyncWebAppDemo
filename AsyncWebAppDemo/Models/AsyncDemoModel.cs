@@ -207,9 +207,11 @@
                 Console.WriteLine("Putting a slice of bread in the toaster");
             }
             Console.WriteLine("Start toasting...");
+            //simulate api call
             await Task.Delay(3002);
             Console.WriteLine("Fire! Toast is ruined!");
             throw new InvalidOperationException("The toaster is on fire");
+            //simulate api call
             await Task.Delay(1000);
             Console.WriteLine("Remove toast from toaster");
 
@@ -251,6 +253,7 @@
                 OutputMessages.Add("Putting a slice of bread in the toaster");
             }
             OutputMessages.Add("Start toasting...");
+            //simulate api call
             await Task.Delay(3002);
             OutputMessages.Add("Remove toast from toaster");
 
@@ -260,12 +263,14 @@
         {
             OutputMessages.Add($"putting {slices} slices of bacon in the pan");
             OutputMessages.Add("cooking first side of bacon...");
+            //simulate api call
             await Task.Delay(4003);
             for (int slice = 0; slice < slices; slice++)
             {
                 OutputMessages.Add("flipping a slice of bacon");
             }
             OutputMessages.Add("cooking the second side of bacon...");
+            //simulate api call
             await Task.Delay(4003);
             OutputMessages.Add("Put bacon on plate");
 
@@ -275,9 +280,11 @@
         private async Task<Egg> FryEggsAsync(int howMany)
         {
             OutputMessages.Add("Warming the egg pan...");
+            //simulate api call
             await Task.Delay(3004);
             OutputMessages.Add($"cracking {howMany} eggs");
             OutputMessages.Add("cooking the eggs ...");
+            //simulate api call
             await Task.Delay(3005);
             OutputMessages.Add("Put eggs on plate");
 
@@ -311,6 +318,7 @@
                 OutputMessages.Add("Putting a slice of bread in the toaster");
             }
             OutputMessages.Add("Start toasting...");
+            //simulate api call
             Task.Delay(3002).Wait();
             OutputMessages.Add("Remove toast from toaster");
 
@@ -321,12 +329,14 @@
         {
             OutputMessages.Add($"putting {slices} slices of bacon in the pan");
             OutputMessages.Add("cooking first side of bacon...");
+            //simulate api call
             Task.Delay(4003).Wait();
             for (int slice = 0; slice < slices; slice++)
             {
                 OutputMessages.Add("flipping a slice of bacon");
             }
             OutputMessages.Add("cooking the second side of bacon...");
+            //simulate api call
             Task.Delay(4003).Wait();
             OutputMessages.Add("Put bacon on plate");
 
@@ -336,9 +346,11 @@
         private Egg FryEggs(int howMany)
         {
             OutputMessages.Add("Warming the egg pan...");
+            //simulate api call
             Task.Delay(3004).Wait();
             OutputMessages.Add($"cracking {howMany} eggs");
             OutputMessages.Add("cooking the eggs ...");
+            //simulate api call
             Task.Delay(3005).Wait();
             OutputMessages.Add("Put eggs on plate");
 

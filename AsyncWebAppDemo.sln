@@ -5,7 +5,12 @@ VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncWebAppDemo", "AsyncWebAppDemo\AsyncWebAppDemo.csproj", "{4EB6B719-0F48-46BE-A990-038DEA9413A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncWebApiDemo", "AsyncWebApiDemo\AsyncWebApiDemo.csproj", "{DD5D2F88-AAC0-4196-9093-2434245E4084}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsyncWebApiDemo", "AsyncWebApiDemo\AsyncWebApiDemo.csproj", "{DD5D2F88-AAC0-4196-9093-2434245E4084}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{871C3629-6C61-42D3-8EA7-EF821770656F}"
+	ProjectSection(SolutionItems) = preProject
+		ReadMe.md = ReadMe.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
