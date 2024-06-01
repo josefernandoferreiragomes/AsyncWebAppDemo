@@ -1,0 +1,134 @@
+﻿@using AsyncWebAppDemo.Repositories
+@model LazyLoadComboDemoModel
+@{
+    ViewBag.Title = "LazyLoading Demo";
+}
+<style>
+  /*   li {
+        list-style: none
+    } */
+
+    /* .option {
+        display: none;
+        margin: 10px 0
+    } */
+
+    /*     .option:first-child {
+            display: block
+        }
+
+        .option:not(.selected):hover {
+            background: red
+        }
+
+    #select {
+        border: 1px solid black;
+        width: 180px;
+        cursor: pointer;
+        max-height: 60px;
+        overflow: auto
+    } */
+</style>
+
+<div class="jumbotron">
+    <h1>LazyLoading Demo</h1>
+    <p class="lead">
+        This page is demo how to load records on demand.
+        Instead of loading all <span class="text-primary">@ViewBag.TotalNumberProjects</span> records,
+        let's load based on user requirement.
+
+        Scroll down the page then you will see that records are added to page.
+        It loads @ViewBag.RecordsPerPage records at a time and total no of records is <span class="text-primary">@ViewBag.TotalNumberProjects</span>.
+    </p>
+</div>
+
+@* <ul id="select">
+    <li class="option selected">--</li>
+    <li class="option" data-value="0">Spain</li>
+    <li class="option last" data-value="1">Portugal</li>
+
+</ul>
+<input id="selectVal" type="hidden" value="" /> *@
+
+@Html.DropDownListFor(m => m.ProjectID, Model.ProjectSelectList, "select project", new { id = "combobox" })
+
+@section scripts {    
+    <script type="text/javascript">
+
+        var page = 0,
+            inCallback = false,
+            isReachedScrollEnd = false;
+
+        function scrollHandler() {
+            if (isReachedScrollEnd == false &&
+                ($("#combobox").scrollTop() <= $("#combobox").height() - $("#combobox").height())) {
+                loadMoreItems();
+            }
+        }
+
+        function loadMoreItems() {
+            var requestStr = '@Url.Action("GetProjects", "LazyLoadComboDemo")';
+            if (page > -1 && !inCallback) {
+                inCallback = true;
+                page++;
+
+                $.ajax({
+                    type: 'GET',
+                    url: requestStr,
+                    data: "pageNum=" + page,
+                    success: function (data, textstatus) {
+                        $.each(data, function (i, item) {
+                            $('#combobox').append(
+                                $('<option>', {
+                                    value: item.value,
+                                    text: item.text
+                            })
+                
+                            );
+                        });
+                        inCallback = false;
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        };
+
+        $(document).ready(function () {
+            $("#combobox").on('blur', () => { scrollHandler(); });
+        });
+
+        // function RandomWordComplete(data) {
+        //     var op = $("li.option.last")
+        //     op.removeClass("last")
+        //     var li = $("<li>" + data.Word + "</li>")
+        //     li.addClass("option")
+        //     li.addClass("last")
+        //     li.data("value", op.data("value") + 1)
+        //     $("#select").append(li)
+        //     li.slideDown()
+        // }
+
+        // $("document").ready(function () {
+        //     $("#combobox").click(function () {
+        //         $("combobox").slideDown();
+        //     });
+
+        //     $(".option:not(.selected)").click(function () {
+        //         $(".option:not(.selected)").slideUp();
+
+        //         $(".option.selected").text($(this).text())
+        //         $("#selectVal").val($(this).data("value"))
+        //     });
+
+        //     $("#select").scroll(function () {
+        //         var div = $(this);
+        //         if (div[0].scrollHeight - div.scrollTop() == div.height()) {
+        //             loadMoreItems();
+        //         }
+
+        //     });
+        // });
+    </script>
+} 

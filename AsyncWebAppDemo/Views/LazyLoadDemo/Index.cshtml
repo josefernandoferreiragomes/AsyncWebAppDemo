@@ -1,0 +1,86 @@
+﻿@using AsyncWebAppDemo.Repositories
+@model LazyLoadDemoModel
+@{
+    ViewBag.Title = "LazyLoading Demo";
+}
+<div class="jumbotron">
+    <h1>LazyLoading Demo</h1>
+    <p class="lead">
+        This page is demo how to load records on demand.
+        Instead of loading all <span class="text-primary">@ViewBag.TotalNumberProjects</span> records,
+        let's load based on user requirement.
+
+        Scroll down the page then you will see that records are added to page.
+        It loads @ViewBag.RecordsPerPage records at a time and total no of records is <span class="text-primary">@ViewBag.TotalNumberProjects</span>.
+    </p>
+</div>
+
+<table class="table table-striped table-bordered table-condensed infinite-scroll">
+    <thead>
+        <tr>
+            <th>ID #</th>
+            <th>Name</th>
+            <th>Manager>
+            <th>Manager Email</th>
+        </tr>
+    </thead>
+    <tbody>
+        @Html.Partial("Index\\_ProjectData", (Model.ProjectList))
+    </tbody>
+</table>
+
+@section scripts {    
+    <script type="text/javascript">
+
+        $(function () {
+            $("div#loading").hide();
+        });
+
+        var url = '@Url.Action("GetProjects", "LazyLoadDemo")'; @*'@Url.RouteUrl("ProjectDataList")';*@
+                
+        var page = 0,
+            inCallback = false,
+            isReachedScrollEnd = false;
+
+        function scrollHandler() {
+            if (isReachedScrollEnd == false &&
+                ($(document).scrollTop() <= $(document).height() - $(window).height())) {
+                loadProjectData(url);
+            }
+        }
+
+        function loadProjectData(loadMoreRowsUrl) {
+            if (page > -1 && !inCallback) {
+                inCallback = true;
+                page++;
+                $("div#loading").show();
+
+                $.ajax({
+                    type: 'GET',
+                    url: loadMoreRowsUrl,
+                    data: "pageNum=" + page,
+                    success: function (data, textstatus) {
+                        if (data != '') {
+                            $("table.infinite-scroll > tbody").append(data);
+                            $("table.infinite-scroll > tbody > tr:even").addClass("alt-row-class");
+                            $("table.infinite-scroll > tbody > tr:odd").removeClass("alt-row-class");
+                        }
+                        else {
+                            page = -1;
+                        }
+
+                        inCallback = false;
+                        $("div#loading").hide();
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        }
+        
+        //$(window).scroll(scrollHandler());
+        $(window).on('scroll', () => { scrollHandler(); });
+
+    </script>
+} 
