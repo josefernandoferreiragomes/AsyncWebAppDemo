@@ -4,30 +4,17 @@
     ViewBag.Title = "LazyLoading Demo";
 }
 <style>
-  /*   li {
-        list-style: none
-    } */
+    .dropdown-menu {
+        max-height: 200px; /* Adjust height as needed */
+        overflow-y: auto;
+        display: none; /* Initially hidden */
+    }
 
-    /* .option {
-        display: none;
-        margin: 10px 0
-    } */
-
-    /*     .option:first-child {
-            display: block
+        .dropdown-toggle:focus + .dropdown-menu,
+        .dropdown-menu:hover {
+            display: block; /* Show the dropdown on focus or hover */
         }
 
-        .option:not(.selected):hover {
-            background: red
-        }
-
-    #select {
-        border: 1px solid black;
-        width: 180px;
-        cursor: pointer;
-        max-height: 60px;
-        overflow: auto
-    } */
 </style>
 
 <div class="jumbotron">
@@ -51,6 +38,26 @@
 <input id="selectVal" type="hidden" value="" /> *@
 
 @Html.DropDownListFor(m => m.ProjectID, Model.ProjectSelectList, "select project", new { id = "combobox" })
+
+<div class="dropdown">
+    <button class="dropdown-toggle">Dropdown</button>
+    <div class="dropdown-menu" id="dropdownMenu">
+        <ul>
+            <li>Item 1</li>
+            <li>Item 2</li>
+            <li>Item 3</li>
+            <li>Item 4</li>
+            <li>Item 5</li>
+            <li>Item 31</li>
+            <li>Item 32</li>
+            <li>Item 33</li>
+            <li>Item 34</li>
+            <li>Item 35</li>
+            <!-- Add more items to make the list scrollable -->
+        </ul>
+    </div>
+</div>
+
 
 @section scripts {    
     <script type="text/javascript">
@@ -97,6 +104,12 @@
 
         $(document).ready(function () {
             $("#combobox").on('blur', () => { scrollHandler(); });
+
+            $('#dropdownMenu').on('scroll', function () {
+                console.log('User is scrolling inside the dropdown!');
+                // You can add more logic here if needed
+            });
+
         });
 
         // function RandomWordComplete(data) {
