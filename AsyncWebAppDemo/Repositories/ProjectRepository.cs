@@ -27,9 +27,9 @@ namespace AsyncWebAppDemo.Repositories
                 tempList.Add(new Project()
                 {
                     ID = i,
-                    Name = $"name of {i}",
-                    ManagerName = $"manager name of {i}",
-                    Email = $"email of {i}",
+                    Name = $"name of Project {i}",
+                    ManagerName = $"manager name of Project {i}",
+                    Email = $"email of Manager {i}",
                 });
             }
 

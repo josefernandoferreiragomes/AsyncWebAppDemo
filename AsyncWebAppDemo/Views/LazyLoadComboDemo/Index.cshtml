@@ -3,17 +3,22 @@
 @{
     ViewBag.Title = "LazyLoading Demo";
 }
-<style>
+<style>    
+    ul li:hover {
+        background-color: #f00;
+        cursor: pointer;
+    }
+
     .dropdown-menu {
         max-height: 200px; /* Adjust height as needed */
         overflow-y: auto;
         display: none; /* Initially hidden */
     }
 
-        .dropdown-toggle:focus + .dropdown-menu,
-        .dropdown-menu:hover {
-            display: block; /* Show the dropdown on focus or hover */
-        }
+    .dropdown-toggle:focus + .dropdown-menu,
+    .dropdown-menu:hover {
+        display: block; /* Show the dropdown on focus or hover */
+    }
 
     #comboboxdiv {
     width: 200px;
@@ -35,48 +40,42 @@
     </p>
 </div>
 
-@* <ul id="select">
-    <li class="option selected">--</li>
-    <li class="option" data-value="0">Spain</li>
-    <li class="option last" data-value="1">Portugal</li>
-
-</ul>
-<input id="selectVal" type="hidden" value="" /> *@
 <div id="comboboxdiv">
 @Html.DropDownListFor(m => m.ProjectID, Model.ProjectSelectList, "select project", new { id = "combobox" })
 </div>
 
+<input id="selectVal" type="hidden" value="" />
+
 <div class="dropdown">
     <button class="dropdown-toggle">Dropdown</button>
     <div class="dropdown-menu" id="dropdownMenu">
-        <ul>
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-            <li>Item 4</li>
-            <li>Item 5</li>
-            <li>Item 31</li>
-            <li>Item 32</li>
-            <li>Item 33</li>
-            <li>Item 34</li>
-            <li>Item 35</li>
-            <!-- Add more items to make the list scrollable -->
+        <ul id="dropdownList">
+            @foreach (var item in Model.ProjectList)
+            {
+                <li id=@string.Format("liItem{0}",item.ID) onclick="liItemOnClick(this);">@item.Name</li>
+            }            
         </ul>
     </div>
 </div>
-
 
 @section scripts {    
     <script type="text/javascript">
 
         var page = 0,
             inCallback = false,
-            isReachedScrollEnd = false;
+            isReachedScrollEnd = false;      
 
         function scrollHandler() {
             if (isReachedScrollEnd == false &&
                 ($("#combobox").scrollTop() <= $("#combobox").height() - $("#combobox").height())) {
                 loadMoreItems();
+            }
+        }
+
+        function listScrollHandler() {
+            if (isReachedScrollEnd == false &&
+                ($("#dropdownList").scrollTop() <= $("#dropdownList").height() - $("#dropdownList").height())) {
+                loadMoreListItems();
             }
         }
 
@@ -109,7 +108,41 @@
             }
         };
 
-        $(document).ready(function () {
+        function loadMoreListItems() {
+            var requestStr = '@Url.Action("GetProjects", "LazyLoadComboDemo")';
+            if (page > -1 && !inCallback) {
+                inCallback = true;
+                page++;
+
+                $.ajax({
+                    type: 'GET',
+                    url: requestStr,
+                    data: "pageNum=" + page,
+                    success: function (data, textstatus) {
+                        let ul = document.getElementById("dropdownList");
+                        $.each(data, function (i, item) {
+                            let li = document.createElement("li");
+                            li.setAttribute("id", "liItem" + item.id);
+                            li.onclick = liItemOnClick(this);
+                            li.innerHTML = item.name;
+
+                            ul.appendChild(li);
+
+                        //    $('<li id="liItem"'+i+' />', { html: item.name, }).appendTo('#dropdownList');
+                        });
+                        inCallback = false;
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert(errorThrown);
+                    }
+                });
+            }
+        };
+
+        function liItemOnClick(item){
+            console.log("clicked list item: "+item.id);
+        }
+        $(document).ready(function () {     
             //$("#combobox").on('blur', () => { scrollHandler(); });
 
             var $select = $('#comboboxdiv');
@@ -126,41 +159,10 @@
 
             $('#dropdownMenu').on('scroll', function () {
                 console.log('User is scrolling inside the dropdown!');
-                // You can add more logic here if needed
+                listScrollHandler();               
             });
-
+            
         });
-
-        // function RandomWordComplete(data) {
-        //     var op = $("li.option.last")
-        //     op.removeClass("last")
-        //     var li = $("<li>" + data.Word + "</li>")
-        //     li.addClass("option")
-        //     li.addClass("last")
-        //     li.data("value", op.data("value") + 1)
-        //     $("#select").append(li)
-        //     li.slideDown()
-        // }
-
-        // $("document").ready(function () {
-        //     $("#combobox").click(function () {
-        //         $("combobox").slideDown();
-        //     });
-
-        //     $(".option:not(.selected)").click(function () {
-        //         $(".option:not(.selected)").slideUp();
-
-        //         $(".option.selected").text($(this).text())
-        //         $("#selectVal").val($(this).data("value"))
-        //     });
-
-        //     $("#select").scroll(function () {
-        //         var div = $(this);
-        //         if (div[0].scrollHeight - div.scrollTop() == div.height()) {
-        //             loadMoreItems();
-        //         }
-
-        //     });
-        // });
+        
     </script>
 } 

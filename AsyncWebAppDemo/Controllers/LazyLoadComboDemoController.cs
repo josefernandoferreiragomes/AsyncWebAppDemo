@@ -28,8 +28,14 @@ namespace AsyncWebAppDemo.Controllers
         {
             LazyLoadComboDemoModel model = new LazyLoadComboDemoModel();
             model.PageNum = pageNum.GetValueOrDefault();
-            return Json(model.ProjectSelectList);
-        }        
+            return Json(model.ProjectList);
+        }
+        public JsonResult GetProjectsSelectList(int? pageNum)
+        {
+            LazyLoadComboDemoModel model = new LazyLoadComboDemoModel();
+            model.PageNum = pageNum.GetValueOrDefault();
+            return Json(model.ProjectList);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
