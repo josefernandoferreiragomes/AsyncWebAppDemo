@@ -261,7 +261,7 @@ namespace AsyncWebAppDemo.Models
                 {
                     Task<ICollection<WeatherForecast>> finishedTask = await Task.WhenAny(serviceCallTasks);
                     output = finishedTask.Result;
-                    OutputMessages.Add($"call returned: {output.FirstOrDefault().TemperatureC}");
+                    OutputMessages.Add($"call returned: {output?.FirstOrDefault()?.TemperatureC}");
                     await finishedTask;
                     serviceCallTasks.Remove(finishedTask);
                 }

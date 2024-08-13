@@ -1,3 +1,4 @@
+using AsyncWebApiDemo.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AsyncWebApiDemo.Controllers

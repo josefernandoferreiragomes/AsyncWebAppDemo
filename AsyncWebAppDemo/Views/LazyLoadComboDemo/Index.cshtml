@@ -15,6 +15,12 @@
             display: block; /* Show the dropdown on focus or hover */
         }
 
+    #comboboxdiv {
+    width: 200px;
+    height: auto;
+    overflow-y: auto; /* Ensures the select element is scrollable */
+}
+
 </style>
 
 <div class="jumbotron">
@@ -36,8 +42,9 @@
 
 </ul>
 <input id="selectVal" type="hidden" value="" /> *@
-
+<div id="comboboxdiv">
 @Html.DropDownListFor(m => m.ProjectID, Model.ProjectSelectList, "select project", new { id = "combobox" })
+</div>
 
 <div class="dropdown">
     <button class="dropdown-toggle">Dropdown</button>
@@ -103,7 +110,19 @@
         };
 
         $(document).ready(function () {
-            $("#combobox").on('blur', () => { scrollHandler(); });
+            //$("#combobox").on('blur', () => { scrollHandler(); });
+
+            var $select = $('#comboboxdiv');
+            var lastScrollTop = $select.scrollTop();
+
+            $select.on('scroll', function () {
+                var currentScrollTop = $(this).scrollTop();
+                if (currentScrollTop !== lastScrollTop) {
+                    console.log('User is scrolling inside the select element!');
+                    scrollHandler();
+                    lastScrollTop = currentScrollTop;
+                }
+            });
 
             $('#dropdownMenu').on('scroll', function () {
                 console.log('User is scrolling inside the dropdown!');

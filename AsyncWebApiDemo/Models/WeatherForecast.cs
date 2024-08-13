@@ -1,4 +1,4 @@
-namespace AsyncWebApiDemo
+namespace AsyncWebApiDemo.Models
 {
     public class WeatherForecast
     {
