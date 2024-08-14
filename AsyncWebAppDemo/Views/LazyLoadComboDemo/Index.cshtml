@@ -119,16 +119,16 @@
                     url: requestStr,
                     data: "pageNum=" + page,
                     success: function (data, textstatus) {
-                        let ul = document.getElementById("dropdownList");
+                        var ulSelect = document.getElementById("dropdownList");                        
                         $.each(data, function (i, item) {
-                            let li = document.createElement("li");
-                            li.setAttribute("id", "liItem" + item.id);
-                            li.onclick = liItemOnClick(this);
-                            li.innerHTML = item.name;
+                            var newLiItem = document.createElement("li");
+                            newLiItem.setAttribute("id", "liItem" + item.id);                            
+                            newLiItem.setAttribute("onclick", "liItemOnClick(this)");
+                            newLiItem.innerHTML = item.name;
 
-                            ul.appendChild(li);
+                            ulSelect.appendChild(newLiItem);
 
-                        //    $('<li id="liItem"'+i+' />', { html: item.name, }).appendTo('#dropdownList');
+                        //TO BE REFACTORED TO JQUERY: $('<li id="liItem"'+i+' />', { html: item.name, }).appendTo('#dropdownList');
                         });
                         inCallback = false;
                     },
@@ -143,6 +143,7 @@
             console.log("clicked list item: "+item.id);
         }
         $(document).ready(function () {     
+            //FOUND PROBLEMS ATTACHING SELECT ELEMENT TO SCROLL HANDLER
             //$("#combobox").on('blur', () => { scrollHandler(); });
 
             var $select = $('#comboboxdiv');
