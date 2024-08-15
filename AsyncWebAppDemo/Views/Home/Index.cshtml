@@ -2,7 +2,31 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    #demonstration ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+</style>
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+    <p></p>
+    <p>This application was build for demonstration purposes</p>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-3">The concepts are:</div>
+    </div>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-3">
+            <ul id="demonstration">
+                <li class="text-align:left">Sync vs Async service calls</li>
+                <li class="text-align:left">Table vs Transposed table</li>
+                <li class="text-align:left">Lazy load</li>
+            </ul>
+        </div>
+    </div>
+    <p></p>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>

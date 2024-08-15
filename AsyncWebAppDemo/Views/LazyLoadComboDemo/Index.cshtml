@@ -4,8 +4,8 @@
     ViewBag.Title = "LazyLoading Demo";
 }
 <style>    
-    ul li:hover {
-        background-color: #f00;
+    ul li.lidropdown:hover {
+        background-color: #afa;
         cursor: pointer;
     }
 
@@ -35,16 +35,22 @@
         Instead of loading all <span class="text-primary">@ViewBag.TotalNumberProjects</span> records,
         let's load based on user requirement.
 
-        Scroll down the page then you will see that records are added to page.
+        Scroll down the drop-down element, then you will see that records are added to page.
         It loads @ViewBag.RecordsPerPage records at a time and total no of records is <span class="text-primary">@ViewBag.TotalNumberProjects</span>.
     </p>
 </div>
 
+<div>
+    <p>Found some problems attaching the events to the built-in combobox...</p>
+</div>
 <div id="comboboxdiv">
 @Html.DropDownListFor(m => m.ProjectID, Model.ProjectSelectList, "select project", new { id = "combobox" })
 </div>
 
-<input id="selectVal" type="hidden" value="" />
+<div>
+    <p></p>
+    <p>But it works perfectly with a different drop-down concept, out of a button and a hovering unordered list:</p>
+</div>
 
 <div class="dropdown">
     <button class="dropdown-toggle">Dropdown</button>
@@ -52,7 +58,7 @@
         <ul id="dropdownList">
             @foreach (var item in Model.ProjectList)
             {
-                <li id=@string.Format("liItem{0}",item.ID) onclick="liItemOnClick(this);">@item.Name</li>
+                <li class="lidropdown" id=@string.Format("liItem{0}",item.ID) onclick="liItemOnClick(this);">@item.Name</li>
             }            
         </ul>
     </div>
@@ -124,6 +130,7 @@
                             var newLiItem = document.createElement("li");
                             newLiItem.setAttribute("id", "liItem" + item.id);                            
                             newLiItem.setAttribute("onclick", "liItemOnClick(this)");
+                            newLiItem.setAttribute("class", "lidropdown");
                             newLiItem.innerHTML = item.name;
 
                             ulSelect.appendChild(newLiItem);
@@ -146,7 +153,7 @@
             //FOUND PROBLEMS ATTACHING SELECT ELEMENT TO SCROLL HANDLER
             //$("#combobox").on('blur', () => { scrollHandler(); });
 
-            var $select = $('#comboboxdiv');
+            var $select = $('#combobox');
             var lastScrollTop = $select.scrollTop();
 
             $select.on('scroll', function () {

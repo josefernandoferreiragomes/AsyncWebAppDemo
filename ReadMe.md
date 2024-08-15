@@ -2,6 +2,7 @@
 Main features:
 Sync Async Concurrent Demo
 Table vs Transposed table
+Lazy Load
 
 ## Sync Async Concurrent Demo
 
@@ -17,6 +18,7 @@ https://learn.microsoft.com/en-us/dotnet/csharp/asynchronous-programming/
 
 ### The purpose of this application section is to demonstrate the difference between a table and a transposed table
 
-## Lazy Load List
+## Lazy Load
+### The purpose of this application section is to demonstrate lazy load in a page and a list
 https://www.c-sharpcorner.com/article/lazy-loading-in-asp-net-mvc/
 https://stackoverflow.com/questions/42326897/lazy-option-loading
