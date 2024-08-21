@@ -31,17 +31,17 @@
 <div class="jumbotron">
     <h1>LazyLoading Demo</h1>
     <p class="lead">
-        This page is demo how to load records on demand.
+        This page is a demo about loading records on demand.
         Instead of loading all <span class="text-primary">@ViewBag.TotalNumberProjects</span> records,
-        let's load based on user requirement.
+        Let's load based on user requirement.
 
-        Scroll down the drop-down element, then you will see that records are added to page.
-        It loads @ViewBag.RecordsPerPage records at a time and total no of records is <span class="text-primary">@ViewBag.TotalNumberProjects</span>.
+        Scroll down the drop-down element, then you will see that additional records are appended to the page.
+        It loads @ViewBag.RecordsPerPage records at a time. And the total number of records is <span class="text-primary">@ViewBag.TotalNumberProjects</span>.
     </p>
 </div>
 
 <div>
-    <p>Found some problems attaching the events to the built-in combobox...</p>
+    <p>Found some problems attaching the onscroll event to the built-in html combobox...</p>
 </div>
 <div id="comboboxdiv">
 @Html.DropDownListFor(m => m.ProjectID, Model.ProjectSelectList, "select project", new { id = "combobox" })
@@ -49,7 +49,8 @@
 
 <div>
     <p></p>
-    <p>But it works perfectly with a different drop-down concept, out of a button and a hovering unordered list:</p>
+    <p>But it works perfectly with a different drop-down concept, 
+       Built with a button and a hovering unordered list:</p>
 </div>
 
 <div class="dropdown">
